@@ -7,3 +7,6 @@
 
 ### Download the page
 [![asciicast](https://asciinema.org/a/537086.svg)](https://asciinema.org/a/537086)
+
+### Downloading images
+[![asciicast](https://asciinema.org/a/540327.svg)](https://asciinema.org/a/540327)
