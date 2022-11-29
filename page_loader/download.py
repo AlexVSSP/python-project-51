@@ -56,6 +56,8 @@ def download_image(url, dir_name, link_path):
         # Make full image name
         image_name = make_file_name_image_asset(url, link_path)
         image_extension = os.path.splitext(link_path)[1]
+        if image_extension == '':
+            image_extension = '.html'
         image_name_with_extension = f'{image_name}{image_extension}'
         # Make image path in project
         image_path = os.path.join(dir_name, image_name_with_extension)
