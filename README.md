@@ -10,3 +10,6 @@
 
 ### Downloading images
 [![asciicast](https://asciinema.org/a/540327.svg)](https://asciinema.org/a/540327)
+
+### Downloading all resources
+[![asciicast](https://asciinema.org/a/541321.svg)](https://asciinema.org/a/541321)
