@@ -120,7 +120,8 @@ def nodejs_page_content_css():
 def test_get_nodejs_css(nodejs_page_content_css):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
-        link_path = '/assets/application.css'
+        # link_path = '/assets/application.css'
+        link_path = 'https://page-loader.hexlet.repl.co/assets/application.css'
         dir_name = make_dir_name(url)
         dir_path = os.path.join(tmpdir, dir_name)
         os.mkdir(dir_path)

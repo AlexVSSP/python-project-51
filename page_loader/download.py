@@ -40,8 +40,8 @@ def make_file_name_image_asset(url, link_path):
 def make_file_name_image_https(link_path):
     no_scheme_link_path = re.search(r'(?<=//).+', link_path)
     # print(f'site= {no_scheme_link_path[0]}')
-    # no_extension_link_path = os.path.splitext(no_scheme_link_path)[0]
-    link_path_with_dash = re.sub(r'[^\da-zA-Z]', '-', no_scheme_link_path[0])
+    no_extension_link_path = os.path.splitext(no_scheme_link_path[0])
+    link_path_with_dash = re.sub(r'[^\da-zA-Z]', '-', no_extension_link_path[0])
     file_name = link_path_with_dash
     return file_name
 
@@ -51,7 +51,7 @@ def download_image(url, dir_name, link_path):
     link_path_parse = urlparse(link_path)
     # Think about to make abspath to the second arg #
     # if link_path.startswith('/assets'):
-    print(link_path)
+    # print(link_path)
     if link_path.startswith('/'):
         # Make full image name
         image_name = make_file_name_image_asset(url, link_path)
@@ -74,7 +74,7 @@ def download_image(url, dir_name, link_path):
         # Make full image name
         image_name = make_file_name_image_https(link_path)
         image_extension = os.path.splitext(link_path)[1]
-        print(f'image_extension = {image_extension}')
+        # print(f'image_extension = {image_extension}')
         if image_extension == '':
             image_extension = '.html'
         image_name_with_extension = f'{image_name}{image_extension}'
