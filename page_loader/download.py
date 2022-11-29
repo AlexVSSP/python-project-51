@@ -47,7 +47,7 @@ def make_file_name_image_https(link_path):
 
 
 def download_image(url, dir_name, link_path):
-    url_parse = urlparse(url)
+    # url_parse = urlparse(url)
     link_path_parse = urlparse(link_path)
     # Think about to make abspath to the second arg #
     # if link_path.startswith('/assets'):
