@@ -2,7 +2,9 @@ import pytest
 import os
 import requests_mock
 import tempfile
-from page_loader import download, download_image, make_dir_name, make_file_name_image_asset
+from page_loader import download, download_image
+# make_dir_name, make_file_name_image_asset
+from page_loader import make_dir_name, make_file_name_html
 
 
 @pytest.fixture
@@ -132,6 +134,16 @@ def test_get_nodejs_css(nodejs_page_content_css):
         expect_image_path = os.path.join(expect_dir_path, 'page-loader-hexlet-repl-co-assets-application.css')
         assert os.path.isfile(expect_image_path)
 
+
+
+def test_exceptions():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        url = 'https://page-loader.hexlet.repl.co/'
+        url_html = make_file_name_html(url)
+        file_path = os.path.join(tmpdir, url_html)
+        open(file_path, "w+")
+        with pytest.raises(FileExistsError):
+            download(url, tmpdir)
 
 # @pytest.fixture
 # def nodejs_page_origin_content():
