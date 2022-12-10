@@ -19,3 +19,6 @@
 
 ### Example with the appearance of an error
 [![asciicast](https://asciinema.org/a/544511.svg)](https://asciinema.org/a/544511)
+
+### Installation the utility and example of work with "progress" library
+[![asciicast](https://asciinema.org/a/544505.svg)](https://asciinema.org/a/544505)
