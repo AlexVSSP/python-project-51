@@ -3,7 +3,6 @@ import os
 import requests_mock
 import tempfile
 from page_loader import download, download_image
-# make_dir_name, make_file_name_image_asset
 from page_loader import make_dir_name, make_file_name_html
 
 
@@ -23,42 +22,6 @@ def test_download_path_to_html_nodejs_for_checks(nodejs_page_for_checks_content)
         assert os.path.exists(path)
         with open(path, 'rb') as f:
             assert f.read() == nodejs_page_for_checks_content
-
-
-# @pytest.fixture
-# def nodejs_page_content():
-#     with open("tests/fixtures/nodejs_page.html", 'rb') as f:
-#         return f.read()
-#
-#
-# def test_download_path_to_html_nodejs(nodejs_page_content):
-#     with tempfile.TemporaryDirectory() as tmpdir:
-#         url = 'https://page-loader.hexlet.repl.co'
-#         with requests_mock.Mocker() as m:
-#             m.get(url, content=nodejs_page_content)
-#             download(url, tmpdir)
-#         path = os.path.join(tmpdir, 'page-loader-hexlet-repl-co.html')
-#         assert os.path.exists(path)
-#         with open(path, 'rb') as f:
-#             assert f.read() == nodejs_page_content
-
-
-# @pytest.fixture
-# def govuk_page_content():
-#     with open("tests/fixtures/govuk_page.html", 'rb') as f:
-#         return f.read()
-#
-#
-# def test_download_path_to_html_govuk(govuk_page_content):
-#     with tempfile.TemporaryDirectory() as tmpdir:
-#         url = 'https://www.gov.uk'
-#         with requests_mock.Mocker() as m:
-#             m.get(url, content=govuk_page_content)
-#             download(url, tmpdir)
-#         path = os.path.join(tmpdir, 'www-gov-uk.html')
-#         assert os.path.exists(path)
-#         with open(path, 'rb') as f:
-#             assert f.read() == govuk_page_content
 
 
 def test_create_dir():
@@ -135,7 +98,6 @@ def test_get_nodejs_css(nodejs_page_content_css):
         assert os.path.isfile(expect_image_path)
 
 
-
 def test_exceptions():
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
@@ -144,16 +106,3 @@ def test_exceptions():
         open(file_path, "w+")
         with pytest.raises(FileExistsError):
             download(url, tmpdir)
-
-# @pytest.fixture
-# def nodejs_page_origin_content():
-#     return ''
-#
-# def test_change_html(page_content):
-#     with tempfile.TemporaryDirectory() as tmpdir:
-#         result = make_file_name_image_asset('https://page-loader.hexlet.repl.co', '/assets/professions/nodejs.png')
-
-
-
-
-

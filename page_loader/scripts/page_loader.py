@@ -3,8 +3,6 @@ import os
 import argparse
 import logging
 import sys
-# import requests
-
 from page_loader import download
 
 
@@ -12,7 +10,6 @@ script_logger = logging.getLogger(__name__)
 script_logger.setLevel(logging.INFO)
 
 py_handler = logging.FileHandler(f"{__name__}.log", mode='w')
-# py_handler.setLevel(logging.INFO)
 py_formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s "
                                  "%(message)s")
 
@@ -37,7 +34,6 @@ def main():
     try:
         print(download(args.URL, args.output))
 
-    # except requests.exceptions.ConnectionError:
     except ConnectionError:
         print(f"Unable to connect to {args.URL}")
         script_logger.error(f"Unable to connect to {args.URL}")

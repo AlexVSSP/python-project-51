@@ -28,15 +28,12 @@ def make_file_name_image_asset(url, link_path):
 
     no_extension_link_path = os.path.splitext(link_path)[0]
     link_path_with_dash = re.sub(r'[^\da-zA-Z]', '-', no_extension_link_path)
-    # print(url_netloc_with_dash)
-    # print(link_path_with_dash)
     file_name = f'{url_netloc_with_dash}{link_path_with_dash}'
     return file_name
 
 
 def make_file_name_image_https(link_path):
     no_scheme_link_path = re.search(r'(?<=//).+', link_path)
-    # print(f'site= {no_scheme_link_path[0]}')
     no_extension_link_path = os.path.splitext(no_scheme_link_path[0])
     link_path_with_dash = re.sub(r'[^\da-zA-Z]', '-', no_extension_link_path[0])
     file_name = link_path_with_dash
