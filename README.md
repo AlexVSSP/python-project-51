@@ -13,3 +13,6 @@
 
 ### Downloading all resources
 [![asciicast](https://asciinema.org/a/541321.svg)](https://asciinema.org/a/541321)
+
+### Installation the utility and example of work
+[![asciicast](https://asciinema.org/a/544505.svg)](https://asciinema.org/a/544505)
