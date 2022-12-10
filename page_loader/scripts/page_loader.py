@@ -80,6 +80,7 @@ def main():
         sys.exit(1)
 
     else:
+        script_logger.info(f'The command line utility "page-loader" has finished')
         sys.exit(0)
 
 
