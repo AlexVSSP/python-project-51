@@ -6,7 +6,8 @@ from page_loader.names import make_file_name_image_asset, \
 
 
 def download_image(url, dir_path, link_path):
-    link_path_parse = urlparse(link_path)
+    # link_path_parse = urlparse(link_path)
+    link_path_parse = urlparse(url)
     if link_path.startswith('/'):
         # Make full image name
         image_name = make_file_name_image_asset(url, link_path)

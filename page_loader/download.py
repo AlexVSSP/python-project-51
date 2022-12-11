@@ -67,6 +67,7 @@ def download(url, output=os.getcwd()):
         bar = IncrementalBar("Downloading images", max=images_count)
         for link in soup.find_all('img'):
             link_path = link.get('src')
+            # print(f"link_path = {link_path}")
             if link_path is not None:
                 link['src'] = download_image(url, dir_path, link_path)
                 bar.next()
@@ -81,11 +82,13 @@ def download(url, output=os.getcwd()):
         bar = IncrementalBar("Downloading links", max=links_count)
         for link in soup.find_all('link'):
 
-            link_path_parse = urlparse(link_path)
+            # link_path_parse = urlparse(link_path)
 
             link_path = link.get('href')
-            if link_path is not None and \
-                    (link_path.startswith('/') or link_path.startswith(f"https://{link_path_parse.netloc}")):
+            # print(f"link_path = {link_path}")
+            # if link_path is not None and \
+            #         (link_path.startswith('/') or link_path.startswith(f"https://{link_path_parse.netloc}")):
+            if link_path is not None:
                 link['href'] = download_image(url, dir_path, link_path)
                 bar.next()
                 py_logger.info(f"Downloaded link has name: {link['href']}")
@@ -99,11 +102,13 @@ def download(url, output=os.getcwd()):
         bar = IncrementalBar("Downloading scripts", max=scripts_count)
         for link in soup.find_all('script'):
 
-            link_path_parse = urlparse(link_path)
+            # link_path_parse = urlparse(link_path)
 
             link_path = link.get('src')
-            if link_path is not None and \
-                    (link_path.startswith('/') or link_path.startswith(f"https://{link_path_parse.netloc}")):
+            # print(f"link_path = {link_path}")
+            # if link_path is not None and \
+            #         (link_path.startswith('/') or link_path.startswith(f"https://{link_path_parse.netloc}")):
+            if link_path is not None:
                 link['src'] = download_image(url, dir_path, link_path)
                 bar.next()
                 py_logger.info(f"Downloaded script has name: {link['src']}")
