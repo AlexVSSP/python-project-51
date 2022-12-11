@@ -31,7 +31,8 @@ def download_image(url, dir_path, link_path):
         with open(image_path, 'wb') as f:
             f.write(image.content)
         # return asset_local
-        return image_path
+        # return image_path
+        return image_name
 
     if link_path.startswith(f"https://{link_path_parse.netloc}"):
         # Make full image name
@@ -46,7 +47,8 @@ def download_image(url, dir_path, link_path):
         with open(image_path, 'wb') as f:
             f.write(image.content)
         # return asset_local
-        return image_path
+        # return image_path
+        return image_name
 
     else:
         return link_path
