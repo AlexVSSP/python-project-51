@@ -66,7 +66,7 @@ def download(url, output=os.getcwd()):
         for link in soup.find_all('img'):
             link_path = link.get('src')
             if link_path is not None:
-                link['src'] = download_image(url, dir_name, link_path)
+                link['src'] = download_image(url, dir_path, link_path)
                 bar.next()
                 py_logger.info(f"Downloaded image has name: {link['src']}")
         bar.finish()
@@ -80,7 +80,7 @@ def download(url, output=os.getcwd()):
         for link in soup.find_all('link'):
             link_path = link.get('href')
             if link_path is not None:
-                link['href'] = download_image(url, dir_name, link_path)
+                link['href'] = download_image(url, dir_path, link_path)
                 bar.next()
                 py_logger.info(f"Downloaded link has name: {link['href']}")
         bar.finish()
@@ -94,7 +94,7 @@ def download(url, output=os.getcwd()):
         for link in soup.find_all('script'):
             link_path = link.get('src')
             if link_path is not None:
-                link['src'] = download_image(url, dir_name, link_path)
+                link['src'] = download_image(url, dir_path, link_path)
                 bar.next()
                 py_logger.info(f"Downloaded script has name: {link['src']}")
         bar.finish()

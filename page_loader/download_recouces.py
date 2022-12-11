@@ -5,7 +5,7 @@ from page_loader.names import make_file_name_image_asset, \
     make_file_name_image_https
 
 
-def download_image(url, dir_name, link_path):
+def download_image(url, dir_path, link_path):
     link_path_parse = urlparse(link_path)
     if link_path.startswith('/'):
         # Make full image name
@@ -16,17 +16,21 @@ def download_image(url, dir_name, link_path):
         image_name_with_extension = f"{image_name}{image_extension}"
 
         # Make image path in project
-        image_path = os.path.join(dir_name, image_name_with_extension)
+        image_path = os.path.join(dir_path, image_name_with_extension)
+        # print(f"image_path= {image_path}")
 
-        # Make image name to change in HTML
-        asset_local = f"{dir_name}/{image_name_with_extension}"
+        # # Make image name to change in HTML
+        # asset_local = f"{dir_name}/{image_name_with_extension}"
+        # print(f"asset_local= {asset_local}")
 
         # Make image path to download
         asset_link = urljoin(url, link_path)
+        # print(f"asset_link= {asset_link}")
         image = requests.get(asset_link)
         with open(image_path, 'wb') as f:
             f.write(image.content)
-        return asset_local
+        # return asset_local
+        return image_path
 
     if link_path.startswith(f"https://{link_path_parse.netloc}"):
         # Make full image name
@@ -35,12 +39,13 @@ def download_image(url, dir_name, link_path):
         if image_extension == '':
             image_extension = '.html'
         image_name_with_extension = f"{image_name}{image_extension}"
-        image_path = os.path.join(dir_name, image_name_with_extension)
-        asset_local = f"{dir_name}/{image_name_with_extension}"
+        image_path = os.path.join(dir_path, image_name_with_extension)
+        # asset_local = f"{dir_name}/{image_name_with_extension}"
         image = requests.get(link_path)
         with open(image_path, 'wb') as f:
             f.write(image.content)
-        return asset_local
+        # return asset_local
+        return image_path
 
     else:
         return link_path
