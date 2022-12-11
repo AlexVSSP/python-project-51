@@ -26,8 +26,8 @@ def download_image(url, dir_path, link_path):
         # print(f"image_path= {image_path}")
 
         if os.path.exists(image_path):
-            image_path = os.path.join(dir_path, f"{image_name}(1)"
-                                                f"{image_extension}")
+            image_name_with_extension = f"{image_name}(1){image_extension}"
+            image_path = os.path.join(dir_path, image_name_with_extension)
 
         # # Make image name to change in HTML
         # asset_local = f"{dir_name}/{image_name_with_extension}"
@@ -53,8 +53,8 @@ def download_image(url, dir_path, link_path):
         image_path = os.path.join(dir_path, image_name_with_extension)
 
         if os.path.exists(image_path):
-            image_path = os.path.join(dir_path, f"{image_name}(1)"
-                                                f"{image_extension}")
+            image_name_with_extension = f"{image_name}(1){image_extension}"
+            image_path = os.path.join(dir_path, image_name_with_extension)
 
         # Make image name to change in HTML
         dir_name = make_dir_name(url)
