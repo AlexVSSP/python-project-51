@@ -5,6 +5,7 @@ from page_loader.names import make_file_name_image_asset, \
     make_file_name_image_https, make_dir_name
 
 
+# flake8: noqa: C901
 def download_image(url, dir_path, link_path):
     # link_path_parse = urlparse(link_path)
     link_path_parse = urlparse(url)
@@ -23,6 +24,10 @@ def download_image(url, dir_path, link_path):
         # Make image path in project
         image_path = os.path.join(dir_path, image_name_with_extension)
         # print(f"image_path= {image_path}")
+
+        if os.path.exists(image_path):
+            image_path = os.path.join(dir_path, f"{image_name}(1)"
+                                                f"{image_extension}")
 
         # # Make image name to change in HTML
         # asset_local = f"{dir_name}/{image_name_with_extension}"
@@ -46,6 +51,10 @@ def download_image(url, dir_path, link_path):
             image_extension = '.html'
         image_name_with_extension = f"{image_name}{image_extension}"
         image_path = os.path.join(dir_path, image_name_with_extension)
+
+        if os.path.exists(image_path):
+            image_path = os.path.join(dir_path, f"{image_name}(1)"
+                                                f"{image_extension}")
 
         # Make image name to change in HTML
         dir_name = make_dir_name(url)
