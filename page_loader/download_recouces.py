@@ -25,9 +25,9 @@ def download_image(url, dir_path, link_path):
         image_path = os.path.join(dir_path, image_name_with_extension)
         # print(f"image_path= {image_path}")
 
-        if os.path.exists(image_path):
-            image_name_with_extension = f"{image_name}(1){image_extension}"
-            image_path = os.path.join(dir_path, image_name_with_extension)
+        # if os.path.exists(image_path):
+        #     image_name_with_extension = f"{image_name}(1){image_extension}"
+        #     image_path = os.path.join(dir_path, image_name_with_extension)
 
         # # Make image name to change in HTML
         # asset_local = f"{dir_name}/{image_name_with_extension}"
@@ -43,7 +43,8 @@ def download_image(url, dir_path, link_path):
         # return image_path
         return asset_local
 
-    if link_path.startswith(f"https://{link_path_parse.netloc}"):
+    if link_path.startswith(f"https://{link_path_parse.netloc}") or \
+            link_path.startswith(f"http://{link_path_parse.netloc}"):
         # Make full image name
         image_name = make_file_name_image_https(link_path)
         image_extension = os.path.splitext(link_path)[1]
@@ -52,9 +53,9 @@ def download_image(url, dir_path, link_path):
         image_name_with_extension = f"{image_name}{image_extension}"
         image_path = os.path.join(dir_path, image_name_with_extension)
 
-        if os.path.exists(image_path):
-            image_name_with_extension = f"{image_name}(1){image_extension}"
-            image_path = os.path.join(dir_path, image_name_with_extension)
+        # if os.path.exists(image_path):
+        #     image_name_with_extension = f"{image_name}(1){image_extension}"
+        #     image_path = os.path.join(dir_path, image_name_with_extension)
 
         # Make image name to change in HTML
         dir_name = make_dir_name(url)
