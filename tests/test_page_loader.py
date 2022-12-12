@@ -106,3 +106,12 @@ def test_exceptions():
         open(file_path, "w+")
         with pytest.raises(FileExistsError):
             download(url, tmpdir)
+
+
+def test_connection_error():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        url = 'https://page-loader.hexlet.repl.co/'
+        with requests_mock.Mocker() as m:
+            m.get(url, status_code=404)
+            with pytest.raises(ConnectionError):
+                download(url, tmpdir)
