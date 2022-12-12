@@ -7,8 +7,6 @@ from page_loader.names import make_file_name_html, make_dir_name
 from page_loader.download_recouces import download_image
 from progress.bar import IncrementalBar
 
-from urllib.parse import urlparse
-
 
 py_logger = logging.getLogger(__name__)
 py_logger.setLevel(logging.INFO)
@@ -81,13 +79,7 @@ def download(url, output=os.getcwd()):
 
         bar = IncrementalBar("Downloading links", max=links_count)
         for link in soup.find_all('link'):
-
-            # link_path_parse = urlparse(link_path)
-
             link_path = link.get('href')
-            # print(f"link_path = {link_path}")
-            # if link_path is not None and \
-            #         (link_path.startswith('/') or link_path.startswith(f"https://{link_path_parse.netloc}")):
             if link_path is not None:
                 link['href'] = download_image(url, dir_path, link_path)
                 bar.next()
@@ -101,13 +93,7 @@ def download(url, output=os.getcwd()):
 
         bar = IncrementalBar("Downloading scripts", max=scripts_count)
         for link in soup.find_all('script'):
-
-            # link_path_parse = urlparse(link_path)
-
             link_path = link.get('src')
-            # print(f"link_path = {link_path}")
-            # if link_path is not None and \
-            #         (link_path.startswith('/') or link_path.startswith(f"https://{link_path_parse.netloc}")):
             if link_path is not None:
                 link['src'] = download_image(url, dir_path, link_path)
                 bar.next()
