@@ -46,6 +46,7 @@ def download_image(url, dir_path, link_path):
         # Make image name to change in HTML
         dir_name = make_dir_name(url)
         asset_local = f"{dir_name}/{image_name_with_extension}"
+
         image = requests.get(link_path)
         with open(image_path, 'wb') as f:
             f.write(image.content)
@@ -54,3 +55,6 @@ def download_image(url, dir_path, link_path):
 
     else:
         return link_path
+
+
+
