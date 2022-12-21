@@ -4,8 +4,9 @@ import requests
 import logging
 from bs4 import BeautifulSoup
 from page_loader.names import make_file_name_html, make_dir_name
-from page_loader.download_recouces import download_image
 from progress.bar import IncrementalBar
+from page_loader.parse_resources import parse_resources
+from page_loader.download_resouces import download_resource
 
 
 py_logger = logging.getLogger(__name__)
@@ -37,6 +38,10 @@ def download(url, output=os.getcwd()):
         raise FileExistsError(f"File with the specified name {file_path} already exists")
     py_logger.info(f"File location is on: {file_path}")
 
+    # Making directory name and path
+    dir_name = make_dir_name(url)
+    dir_path = os.path.join(output, dir_name)
+
     # Getting HTML file
     response = requests.get(url)
     if response.status_code != 200:
@@ -44,62 +49,32 @@ def download(url, output=os.getcwd()):
         raise ConnectionError(f"Status code from {url} is {response.status_code}")
     file = response.text
 
-    # Creating a directory
-    dir_name = make_dir_name(url)
-    dir_path = os.path.join(output, dir_name)
-    os.mkdir(dir_path)
-    if not os.path.isdir(dir_path):
-        py_logger.error(f"Specified directory {dir_path} is missing")
-        raise NotADirectoryError(f"Specified directory {dir_path} is missing")
-    py_logger.info(f"Directory with resources is on: {dir_path}")
-
     # Work with page
     with open(file_path, 'w+') as fp:
         soup = BeautifulSoup(file, 'html.parser')
+        tags = soup.find_all(['img', 'link', 'script'])
 
-        # Find all images on page
-        images_count = 0
-        for link in soup.find_all('img'):
-            images_count += 1
+        # Resources search and link substitution in html file
+        resources_for_download = parse_resources(url, tags)
 
-        bar = IncrementalBar("Downloading images", max=images_count)
-        for link in soup.find_all('img'):
-            link_path = link.get('src')
-            # print(f"link_path = {link_path}")
-            if link_path is not None:
-                link['src'] = download_image(url, dir_path, link_path)
+        # Create directory
+        if resources_for_download:
+            os.mkdir(dir_path)
+            if not os.path.isdir(dir_path):
+                py_logger.error(f"Specified directory {dir_path} is missing")
+                raise NotADirectoryError(f"Specified directory {dir_path} is missing")
+            py_logger.info(f"Directory with resources is on: {dir_path}")
+
+            bar = IncrementalBar("Downloading resources", max=len(resources_for_download))
+
+            # Download resources
+            for resource in resources_for_download:
+                download_resource(url, dir_path, resource)
+                py_logger.info(f"Resource downloaded: {resource}")
                 bar.next()
-                py_logger.info(f"Downloaded image has name: {link['src']}")
-        bar.finish()
+            bar.finish()
 
-        # Find all links on page
-        links_count = 0
-        for link in soup.find_all('link'):
-            links_count += 1
-
-        bar = IncrementalBar("Downloading links", max=links_count)
-        for link in soup.find_all('link'):
-            link_path = link.get('href')
-            if link_path is not None:
-                link['href'] = download_image(url, dir_path, link_path)
-                bar.next()
-                py_logger.info(f"Downloaded link has name: {link['href']}")
-        bar.finish()
-
-        # Find all scripts on page
-        scripts_count = 0
-        for link in soup.find_all('script', src=True):
-            scripts_count += 1
-
-        bar = IncrementalBar("Downloading scripts", max=scripts_count)
-        for link in soup.find_all('script'):
-            link_path = link.get('src')
-            if link_path is not None:
-                link['src'] = download_image(url, dir_path, link_path)
-                bar.next()
-                py_logger.info(f"Downloaded script has name: {link['src']}")
-        bar.finish()
-
+        # Saving html file
         bar = IncrementalBar("Downloading page", max=1, suffix='%(percent)d%%')
         fp.write(soup.prettify())
         bar.next()
