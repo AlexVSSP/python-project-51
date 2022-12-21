@@ -1,6 +1,7 @@
 from page_loader.names import make_resource_name_in_html_file
 
 
+# flake8: noqa: C901
 def parse_resources(url, tags):
     resources_for_download = []
     for tag in tags:
