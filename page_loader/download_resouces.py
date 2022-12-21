@@ -5,56 +5,28 @@ from page_loader.names import make_file_name_image_asset, \
     make_file_name_image_https, make_dir_name
 
 
-# flake8: noqa: C901
-def download_image(url, dir_path, link_path):
+def download_resource(url, dir_path, resource):
     link_path_parse = urlparse(url)
-    if link_path.startswith('/'):
-
-        # Make full image name
-        image_name = make_file_name_image_asset(url, link_path)
-        image_extension = os.path.splitext(link_path)[1]
-        if image_extension == '':
-            image_extension = '.html'
-        image_name_with_extension = f"{image_name}{image_extension}"
-
-        # Make image name to change in HTML
-        dir_name = make_dir_name(url)
-        asset_local = f"{dir_name}/{image_name_with_extension}"
+    # for resource in resources:
+    if resource.startswith('/'):
 
         # Make image path in project
-        image_path = os.path.join(dir_path, image_name_with_extension)
+        image_path = os.path.join(dir_path, make_file_name_image_asset(url, resource))
 
-        # Make image path to download
-        asset_link = urljoin(url, link_path)
+        # Download resource
+        asset_link = urljoin(url, resource)
         image = requests.get(asset_link)
         with open(image_path, 'wb') as f:
             f.write(image.content)
 
-        return asset_local
+    if resource.startswith(f"https://{link_path_parse.netloc}") or \
+            resource.startswith(f"http://{link_path_parse.netloc}"):
 
-    if link_path.startswith(f"https://{link_path_parse.netloc}") or \
-            link_path.startswith(f"http://{link_path_parse.netloc}"):
+        # Make image path in project
+        image_path = os.path.join(dir_path, make_file_name_image_https(resource))
 
-        # Make full image name
-        image_name = make_file_name_image_https(link_path)
-        image_extension = os.path.splitext(link_path)[1]
-        if image_extension == '':
-            image_extension = '.html'
-        image_name_with_extension = f"{image_name}{image_extension}"
-        image_path = os.path.join(dir_path, image_name_with_extension)
-
-        # Make image name to change in HTML
-        dir_name = make_dir_name(url)
-        asset_local = f"{dir_name}/{image_name_with_extension}"
-
-        image = requests.get(link_path)
+        # Download resource
+        image = requests.get(resource)
         with open(image_path, 'wb') as f:
             f.write(image.content)
-
-        return asset_local
-
-    else:
-        return link_path
-
-
 
