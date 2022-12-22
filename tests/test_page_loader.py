@@ -3,7 +3,8 @@ import os
 import requests_mock
 import tempfile
 from page_loader import download
-from page_loader import make_dir_name, make_file_name_html
+# from page_loader import make_dir_name, make_file_name_html
+from page_loader.naming import make_dir_name, make_file_name_html
 from page_loader.download_resouces import download_resource
 
 
@@ -23,16 +24,6 @@ def test_download_path_to_html_nodejs_for_checks(nodejs_page_for_checks_content)
         assert os.path.exists(path)
         with open(path, 'rb') as f:
             assert f.read() == nodejs_page_for_checks_content
-
-
-# def test_create_dir():
-#     with tempfile.TemporaryDirectory() as tmpdir:
-#         url = 'https://www.gov.uk'
-#         with requests_mock.Mocker() as m:
-#             m.get(url)
-#             download(url, tmpdir)
-#         expect_dir = os.path.join(tmpdir, 'www-gov-uk_files')
-#         assert os.path.isdir(expect_dir)
 
 
 @pytest.fixture

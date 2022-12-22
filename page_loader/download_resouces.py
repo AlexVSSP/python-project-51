@@ -1,7 +1,7 @@
 import os.path
 import requests
 from urllib.parse import urlparse, urljoin
-from page_loader.names import make_file_name_image_asset, \
+from page_loader.naming import make_file_name_image_asset, \
     make_file_name_image_https
 
 
