@@ -21,7 +21,7 @@ def make_dir_name(url):
     return dir_name
 
 
-def make_file_name_image_asset(url, link_path):
+def make_resource_name_start_with_asset(url, link_path):
     url_parse = urlparse(url)
     url_netloc = url_parse.netloc
     url_netloc_with_dash = re.sub(r'[^\da-zA-Z]', '-', url_netloc)
@@ -37,7 +37,7 @@ def make_file_name_image_asset(url, link_path):
     return image_name_with_extension
 
 
-def make_file_name_image_https(link_path):
+def make_resource_name_start_with_scheme(link_path):
     no_scheme_link_path = re.search(r'(?<=//).+', link_path)
     no_extension_link_path = os.path.splitext(no_scheme_link_path[0])
     link_path_with_dash = re.sub(r'[^\da-zA-Z]', '-', no_extension_link_path[0])
@@ -55,7 +55,7 @@ def make_resource_name_in_html_file(url, link_path):
     if link_path.startswith('/'):
 
         # Make full image name
-        image_name_with_extension = make_file_name_image_asset(url, link_path)
+        image_name_with_extension = make_resource_name_start_with_asset(url, link_path)
 
         # Make image name to change in HTML
         dir_name = make_dir_name(url)
@@ -66,7 +66,7 @@ def make_resource_name_in_html_file(url, link_path):
             link_path.startswith(f"http://{link_path_parse.netloc}"):
 
         # Make full image name
-        image_name_with_extension = make_file_name_image_https(link_path)
+        image_name_with_extension = make_resource_name_start_with_scheme(link_path)
 
         # Make image name to change in HTML
         dir_name = make_dir_name(url)

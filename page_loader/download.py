@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from page_loader.naming import make_file_name_html, make_dir_name
 from progress.bar import IncrementalBar
 from page_loader.parse_resources import parse_resources
-from page_loader.download_resouces import download_resource
+from page_loader.download_resouce import download_resource
 
 
 py_logger = logging.getLogger(__name__)
