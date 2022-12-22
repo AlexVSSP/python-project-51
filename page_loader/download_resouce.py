@@ -1,8 +1,8 @@
 import os.path
 import requests
 from urllib.parse import urlparse, urljoin
-from page_loader.naming import make_resource_name_start_with_asset, \
-    make_resource_name_start_with_scheme
+from page_loader.naming import name_res_start_with_asset, \
+    name_res_start_with_scheme
 
 
 def download_resource(url, dir_path, resource):
@@ -12,7 +12,7 @@ def download_resource(url, dir_path, resource):
 
         # Make image path in project
         resource_path = os.path.join(dir_path,
-                                     make_resource_name_start_with_asset(url, resource))
+                                     name_res_start_with_asset(url, resource))
 
         # Download resource
         asset_link = urljoin(url, resource)
@@ -25,7 +25,7 @@ def download_resource(url, dir_path, resource):
 
         # Make image path in project
         resource_path = os.path.join(dir_path,
-                                     make_resource_name_start_with_scheme(resource))
+                                     name_res_start_with_scheme(resource))
 
         # Download resource
         image = requests.get(resource)
