@@ -4,7 +4,7 @@ import requests_mock
 import tempfile
 from page_loader import download
 from page_loader.naming import make_dir_name, make_file_name_html
-from page_loader.download_resouce import download_resource
+from page_loader.download_resources import download_resources
 
 
 @pytest.fixture
@@ -35,12 +35,13 @@ def test_get_nodejs_image(nodejs_page_content):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
         link_path = '/assets/professions/nodejs.png'
+        resources = ['/assets/professions/nodejs.png']
         dir_name = make_dir_name(url)
         dir_path = os.path.join(tmpdir, dir_name)
         os.mkdir(dir_path)
         with requests_mock.Mocker() as m:
             m.get(link_path, content=nodejs_page_content)
-            download_resource(url, dir_path, link_path)
+            download_resources(url, dir_path, resources)
         expect_dir_path = os.path.join(tmpdir, 'page-loader-hexlet-repl-co-_files')
         expect_image_path = os.path.join(expect_dir_path, 'page-loader-hexlet-repl-co-assets-professions-nodejs.png')
         assert os.path.isfile(expect_image_path)
@@ -56,12 +57,13 @@ def test_get_nodejs_js(nodejs_page_content_js):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
         link_path = '/script.js'
+        resources = ['/script.js']
         dir_name = make_dir_name(url)
         dir_path = os.path.join(tmpdir, dir_name)
         os.mkdir(dir_path)
         with requests_mock.Mocker() as m:
             m.get(link_path, content=nodejs_page_content_js)
-            download_resource(url, dir_path, link_path)
+            download_resources(url, dir_path, resources)
         expect_dir_path = os.path.join(tmpdir, 'page-loader-hexlet-repl-co-_files')
         expect_image_path = os.path.join(expect_dir_path, 'page-loader-hexlet-repl-co-script.js')
         assert os.path.isfile(expect_image_path)
@@ -77,12 +79,13 @@ def test_get_nodejs_css(nodejs_page_content_css):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
         link_path = 'https://page-loader.hexlet.repl.co/assets/application.css'
+        resources = ['https://page-loader.hexlet.repl.co/assets/application.css']
         dir_name = make_dir_name(url)
         dir_path = os.path.join(tmpdir, dir_name)
         os.mkdir(dir_path)
         with requests_mock.Mocker() as m:
             m.get(link_path, content=nodejs_page_content_css)
-            download_resource(url, dir_path, link_path)
+            download_resources(url, dir_path, resources)
         expect_dir_path = os.path.join(tmpdir, 'page-loader-hexlet-repl-co-_files')
         expect_image_path = os.path.join(expect_dir_path, 'page-loader-hexlet-repl-co-assets-application.css')
         assert os.path.isfile(expect_image_path)
