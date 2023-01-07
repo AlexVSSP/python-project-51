@@ -1,9 +1,6 @@
-import os.path
 import requests
 import logging
 from urllib.parse import urlparse, urljoin
-from page_loader.naming import name_res_start_with_asset, \
-    name_res_start_with_scheme
 from progress.bar import IncrementalBar
 
 
@@ -18,34 +15,31 @@ py_handler.setFormatter(py_formatter)
 py_logger.addHandler(py_handler)
 
 
-def download_resources(url, dir_path, resources):
+def download_resource(resource_path, get_image, link):
+    with open(resource_path, 'wb') as f:
+        f.write(get_image(link))
+
+
+def download_resources(url, resources):
     link_path_parse = urlparse(url)
     bar = IncrementalBar("Downloading resources", max=len(resources))
     for resource in resources:
-        if resource.startswith('/'):
 
-            # Make image path in project
-            resource_path = os.path.join(dir_path,
-                                         name_res_start_with_asset(url,
-                                                                   resource))
+        link_path, resource_path = resource
+        asset_link = urljoin(url, link_path)
 
-            # Download resource
-            asset_link = urljoin(url, resource)
-            image = requests.get(asset_link)
-            with open(resource_path, 'wb') as f:
-                f.write(image.content)
+        def get_image(link):
+            image = requests.get(link)
+            return image.content
 
-        if resource.startswith(f"https://{link_path_parse.netloc}") or \
-                resource.startswith(f"http://{link_path_parse.netloc}"):
+        if link_path.startswith(f"https://{link_path_parse.netloc}") or \
+                link_path.startswith(f"http://{link_path_parse.netloc}"):
+            download_resource(resource_path, get_image, link_path)
 
-            # Make image path in project
-            resource_path = os.path.join(dir_path,
-                                         name_res_start_with_scheme(resource))
+        else:
+            download_resource(resource_path, get_image, asset_link)
 
-            # Download resource
-            image = requests.get(resource)
-            with open(resource_path, 'wb') as f:
-                f.write(image.content)
-        py_logger.info(f"Resource downloaded: {resource}")
+        py_logger.info(f"Resource downloaded: {link_path}")
+
         bar.next()
     bar.finish()
