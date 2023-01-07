@@ -48,7 +48,6 @@ def test_get_nodejs_image(nodejs_page_content):
         assert os.path.isfile(expect_image_path)
 
 
-
 @pytest.fixture
 def nodejs_page_content_js():
     with open("tests/fixtures/assets/script.js", 'rb') as f:
