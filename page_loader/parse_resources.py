@@ -26,12 +26,12 @@ def parse_resources(url, file, dir_path):
                     link_path.startswith(f"http://{link_path_parse.netloc}"):
                 resource_path = os.path.join(dir_path,
                                              name_res_start_with_scheme(link_path))
+                resources_for_download.append((link_path, resource_path))
             if link_path.startswith('/'):
                 resource_path = os.path.join(dir_path,
                                              name_res_start_with_asset(url,
                                                                        link_path))
-
-            resources_for_download.append((link_path, resource_path))
+                resources_for_download.append((link_path, resource_path))
 
     text_result = soup.prettify()
     return resources_for_download, text_result
