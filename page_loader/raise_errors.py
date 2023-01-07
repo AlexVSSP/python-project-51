@@ -26,6 +26,15 @@ def file_exists_error(file_path):
         raise FileExistsError(f"File with the specified name {file_path} already exists")
 
 
+def file_system_error(output, file_path):
+    if not os.access(output, os.W_OK):
+        py_logger.error(f"There are no write permissions in the specified directory: {output}")
+        raise PermissionError(f"There are no write permissions in the specified directory: {output}")
+    elif os.path.isfile(file_path):
+        py_logger.error(f"File with the specified name {file_path} already exists")
+        raise FileExistsError(f"File with the specified name {file_path} already exists")
+
+
 def connection_error(url, response):
     if response.status_code != 200:
         py_logger.error(f"Status code from {url} is {response.status_code}")
