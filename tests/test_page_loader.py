@@ -7,6 +7,7 @@ from page_loader import download
 from page_loader.utils.naming import make_dir_name, make_file_name_html
 from page_loader.download_resources import download_resources
 from page_loader.parse_resources import parse_resources
+from page_loader.utils.making_paths import make_file_path, make_dir_path
 
 
 @pytest.fixture
@@ -115,30 +116,6 @@ def test_connection_error():
                 download(url, tmpdir)
 
 
-# a = '''<!DOCTYPE html>
-# <html lang="ru">
-#  <head>
-#   <meta charset="utf-8"/>
-#   <title>
-#    Курсы по программированию Хекслет
-#   </title>
-#   <link href="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css" media="all" rel="stylesheet"/>
-#   <link href="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html" rel="canonical"/>
-#  </head>
-#  <body>
-#   <img alt="Иконка профессии Node.js-программист" src="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png"/>
-#   <h3>
-#    <a href="/professions/nodejs">
-#     Node.js-программист
-#    </a>
-#   </h3>
-#  </body>
-#  <script src="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js">
-#  </script>
-# </html>
-# '''
-
-
 @pytest.fixture
 def nodejs_page_origin():
     with open("tests/fixtures/nodejs_page_origin.html", 'rb') as f:
@@ -156,3 +133,11 @@ def test_parse_resources(nodejs_page_origin):
         expect_text = open('tests/fixtures/expect_text.html', 'rb')
         soup = BeautifulSoup(expect_text, 'html.parser')
         assert parse_resources(url, nodejs_page_origin, expect_dir_path) == (expect_resources, soup.prettify())
+
+
+def test_making_paths():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        url = 'https://page-loader.hexlet.repl.co/'
+        output = tmpdir
+        assert make_file_path(url, output) == f'{tmpdir}/page-loader-hexlet-repl-co-.html'
+        assert make_dir_path(url, output) == f'{tmpdir}/page-loader-hexlet-repl-co-_files'
