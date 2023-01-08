@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "Utility downloads the page from the network and puts it in the specified existing directory"
 authors = ["Aleksei Seleznev <ferfa2@rambler.ru>"]
 packages = [
     { include = "page_loader" },
