@@ -126,10 +126,15 @@ def test_parse_resources(nodejs_page_origin):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
         expect_dir_path = os.path.join(tmpdir, 'page-loader-hexlet-repl-co-_files')
+        # expect_resources = [('/assets/application.css', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css'),
+        #                     ('/courses', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html'),
+        #                     ('/assets/professions/nodejs.png', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png'),
+        #                     ('/script.js', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js')]
+
         expect_resources = [('/assets/application.css', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css'),
                             ('/courses', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html'),
                             ('/assets/professions/nodejs.png', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png'),
-                            ('/script.js', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js')]
+                            ('https://page-loader.hexlet.repl.co/script.js', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js')]
         expect_text = open('tests/fixtures/expect_text.html', 'rb')
         soup = BeautifulSoup(expect_text, 'html.parser')
         assert parse_resources(url, nodejs_page_origin, expect_dir_path) == (expect_resources, soup.prettify())
