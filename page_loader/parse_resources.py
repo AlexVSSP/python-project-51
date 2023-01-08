@@ -34,4 +34,5 @@ def parse_resources(url, file, dir_path):
                 resources_for_download.append((link_path, resource_path))
 
     text_result = soup.prettify()
+
     return resources_for_download, text_result

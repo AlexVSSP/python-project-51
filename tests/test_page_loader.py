@@ -2,6 +2,7 @@ import pytest
 import os
 import requests_mock
 import tempfile
+from bs4 import BeautifulSoup
 from page_loader import download
 from page_loader.utils.naming import make_dir_name, make_file_name_html
 from page_loader.download_resources import download_resources
@@ -114,28 +115,28 @@ def test_connection_error():
                 download(url, tmpdir)
 
 
-a = '''<!DOCTYPE html>
-<html lang="ru">
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Курсы по программированию Хекслет
-  </title>
-  <link href="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css" media="all" rel="stylesheet"/>
-  <link href="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html" rel="canonical"/>
- </head>
- <body>
-  <img alt="Иконка профессии Node.js-программист" src="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png"/>
-  <h3>
-   <a href="/professions/nodejs">
-    Node.js-программист
-   </a>
-  </h3>
- </body>
- <script src="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js">
- </script>
-</html>
-'''
+# a = '''<!DOCTYPE html>
+# <html lang="ru">
+#  <head>
+#   <meta charset="utf-8"/>
+#   <title>
+#    Курсы по программированию Хекслет
+#   </title>
+#   <link href="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css" media="all" rel="stylesheet"/>
+#   <link href="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html" rel="canonical"/>
+#  </head>
+#  <body>
+#   <img alt="Иконка профессии Node.js-программист" src="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png"/>
+#   <h3>
+#    <a href="/professions/nodejs">
+#     Node.js-программист
+#    </a>
+#   </h3>
+#  </body>
+#  <script src="page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js">
+#  </script>
+# </html>
+# '''
 
 
 @pytest.fixture
@@ -148,7 +149,10 @@ def test_parse_resources(nodejs_page_origin):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
         expect_dir_path = os.path.join(tmpdir, 'page-loader-hexlet-repl-co-_files')
-        expect_resources = [('/assets/application.css', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css'), ('/courses', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html'), ('/assets/professions/nodejs.png', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png'), ('/script.js', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js')]
-        # expect_text = open('tests/fixtures/expect_text.txt', 'rb')
-        # file = nodejs_page_origin()
-        assert parse_resources(url, nodejs_page_origin, expect_dir_path) == (expect_resources, a)
+        expect_resources = [('/assets/application.css', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css'),
+                            ('/courses', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html'),
+                            ('/assets/professions/nodejs.png', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png'),
+                            ('/script.js', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js')]
+        expect_text = open('tests/fixtures/expect_text.html', 'rb')
+        soup = BeautifulSoup(expect_text, 'html.parser')
+        assert parse_resources(url, nodejs_page_origin, expect_dir_path) == (expect_resources, soup.prettify())
