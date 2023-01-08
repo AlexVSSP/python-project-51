@@ -6,8 +6,8 @@ from page_loader.parse_resources import parse_resources
 from page_loader.download_resources import download_resources
 from page_loader.save_html_page import save_html_page
 from page_loader.utils.making_paths import make_file_path, make_dir_path
-from page_loader.utils.raise_errors import connection_error, not_a_directory_error, \
-    file_system_error
+from page_loader.utils.raise_errors import connection_error, \
+    not_a_directory_error, file_system_error
 
 
 py_logger = logging.getLogger(__name__)
