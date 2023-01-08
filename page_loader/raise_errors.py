@@ -14,18 +14,6 @@ py_logger.addHandler(py_handler)
 
 
 # flake8: noqa: C901
-def permission_error(output):
-    if not os.access(output, os.W_OK):
-        py_logger.error(f"There are no write permissions in the specified directory: {output}")
-        raise PermissionError(f"There are no write permissions in the specified directory: {output}")
-
-
-def file_exists_error(file_path):
-    if os.path.isfile(file_path):
-        py_logger.error(f"File with the specified name {file_path} already exists")
-        raise FileExistsError(f"File with the specified name {file_path} already exists")
-
-
 def file_system_error(output, file_path):
     if not os.access(output, os.W_OK):
         py_logger.error(f"There are no write permissions in the specified directory: {output}")
