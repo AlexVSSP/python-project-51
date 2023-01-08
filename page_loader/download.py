@@ -21,6 +21,12 @@ py_handler.setFormatter(py_formatter)
 py_logger.addHandler(py_handler)
 
 
+def get_html(url):
+    response = requests.get(url)
+    connection_error(url, response)
+    return response.text
+
+
 def download(url, output=os.getcwd()):
     py_logger.info("Module 'download' starts working")
     py_logger.info(f"The following url is entered: {url}")
@@ -36,12 +42,12 @@ def download(url, output=os.getcwd()):
     dir_path = make_dir_path(url, output)
 
     # Getting HTML file
-    def get_html():
-        response = requests.get(url)
-        connection_error(url, response)
-        return response.text
+    # def get_html():
+    #     response = requests.get(url)
+    #     connection_error(url, response)
+    #     return response.text
 
-    file = get_html()
+    file = get_html(url)
 
     # Resources search and link substitution in html file
     resources_for_download, text_result = parse_resources(url, file, dir_path)

@@ -15,7 +15,12 @@ py_handler.setFormatter(py_formatter)
 py_logger.addHandler(py_handler)
 
 
-def download_resource(resource_path, get_image, link):
+def get_image(link):
+    image = requests.get(link)
+    return image.content
+
+
+def download_resource(resource_path, link):
     with open(resource_path, 'wb') as f:
         f.write(get_image(link))
 
@@ -28,16 +33,16 @@ def download_resources(url, resources):
         link_path, resource_path = resource
         asset_link = urljoin(url, link_path)
 
-        def get_image(link):
-            image = requests.get(link)
-            return image.content
+        # def get_image(link):
+        #     image = requests.get(link)
+        #     return image.content
 
         if link_path.startswith(f"https://{link_path_parse.netloc}") or \
                 link_path.startswith(f"http://{link_path_parse.netloc}"):
-            download_resource(resource_path, get_image, link_path)
+            download_resource(resource_path, link_path)
 
         else:
-            download_resource(resource_path, get_image, asset_link)
+            download_resource(resource_path, asset_link)
 
         py_logger.info(f"Resource downloaded: {link_path}")
 
