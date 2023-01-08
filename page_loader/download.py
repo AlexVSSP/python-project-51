@@ -5,8 +5,8 @@ import logging
 from page_loader.parse_resources import parse_resources
 from page_loader.download_resources import download_resources
 from page_loader.save_html_page import save_html_page
-from page_loader.making_paths import make_file_path, make_dir_path
-from page_loader.raise_errors import connection_error, not_a_directory_error, \
+from page_loader.utils.making_paths import make_file_path, make_dir_path
+from page_loader.utils.raise_errors import connection_error, not_a_directory_error, \
     file_system_error
 
 
@@ -41,12 +41,7 @@ def download(url, output=os.getcwd()):
     # Making directory name and path
     dir_path = make_dir_path(url, output)
 
-    # Getting HTML file
-    # def get_html():
-    #     response = requests.get(url)
-    #     connection_error(url, response)
-    #     return response.text
-
+    # Getting html
     file = get_html(url)
 
     # Resources search and link substitution in html file

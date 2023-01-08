@@ -33,10 +33,6 @@ def download_resources(url, resources):
         link_path, resource_path = resource
         asset_link = urljoin(url, link_path)
 
-        # def get_image(link):
-        #     image = requests.get(link)
-        #     return image.content
-
         if link_path.startswith(f"https://{link_path_parse.netloc}") or \
                 link_path.startswith(f"http://{link_path_parse.netloc}"):
             download_resource(resource_path, link_path)

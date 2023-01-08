@@ -3,7 +3,7 @@ import os
 import requests_mock
 import tempfile
 from page_loader import download
-from page_loader.naming import make_dir_name, make_file_name_html
+from page_loader.utils.naming import make_dir_name, make_file_name_html
 from page_loader.download_resources import download_resources
 
 
