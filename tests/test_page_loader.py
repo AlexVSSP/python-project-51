@@ -6,7 +6,6 @@ from page_loader import download
 from page_loader.utils.naming import make_dir_name, make_file_name_html
 from page_loader.download_resources import download_resources
 from page_loader.parse_resources import parse_resources
-from page_loader.download import get_html
 
 
 @pytest.fixture
@@ -137,10 +136,14 @@ a = '''<!DOCTYPE html>
  </script>
 </html>
 '''
+
+
 @pytest.fixture
 def nodejs_page_origin():
     with open("tests/fixtures/nodejs_page_origin.html", 'rb') as f:
         return f.read()
+
+
 def test_parse_resources(nodejs_page_origin):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
