@@ -14,7 +14,7 @@ py_logger.addHandler(py_handler)
 
 
 # flake8: noqa: C901
-def file_system_error(output, file_path):
+def raise_file_system_error(output, file_path):
     if not os.access(output, os.W_OK):
         py_logger.error(f"There are no write permissions in the specified directory: {output}")
         raise PermissionError(f"There are no write permissions in the specified directory: {output}")
@@ -23,13 +23,13 @@ def file_system_error(output, file_path):
         raise FileExistsError(f"File with the specified name {file_path} already exists")
 
 
-def connection_error(url, response):
+def raise_connection_error(url, response):
     if response.status_code != 200:
         py_logger.error(f"Status code from {url} is {response.status_code}")
         raise ConnectionError(f"Status code from {url} is {response.status_code}")
 
 
-def not_a_directory_error(dir_path):
+def raise_not_a_directory_error(dir_path):
     if not os.path.isdir(dir_path):
         py_logger.error(f"Specified directory {dir_path} is missing")
         raise NotADirectoryError(f"Specified directory {dir_path} is missing")

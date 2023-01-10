@@ -4,10 +4,10 @@ import requests_mock
 import tempfile
 from bs4 import BeautifulSoup
 from page_loader import download
-from page_loader.utils.naming import make_dir_name, make_file_name_html
+from page_loader.naming import make_dir_name, make_file_name_html
 from page_loader.download_resources import download_resources
 from page_loader.parse_resources import parse_resources
-from page_loader.utils.making_paths import make_file_path, make_dir_path
+from page_loader.making_paths import make_file_path, make_dir_path
 
 
 @pytest.fixture
@@ -126,11 +126,6 @@ def test_parse_resources(nodejs_page_origin):
     with tempfile.TemporaryDirectory() as tmpdir:
         url = 'https://page-loader.hexlet.repl.co/'
         expect_dir_path = os.path.join(tmpdir, 'page-loader-hexlet-repl-co-_files')
-        # expect_resources = [('/assets/application.css', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css'),
-        #                     ('/courses', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html'),
-        #                     ('/assets/professions/nodejs.png', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png'),
-        #                     ('/script.js', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-script.js')]
-
         expect_resources = [('/assets/application.css', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-application.css'),
                             ('/courses', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-courses.html'),
                             ('/assets/professions/nodejs.png', f'{tmpdir}/page-loader-hexlet-repl-co-_files/page-loader-hexlet-repl-co-assets-professions-nodejs.png'),

@@ -1,8 +1,8 @@
 import os.path
-from page_loader.utils.naming import name_res_in_html_file
+from page_loader.naming import name_res_in_html_file
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-from page_loader.utils.naming import name_res_start_with_asset, \
+from page_loader.naming import name_res_start_with_asset, \
     name_res_start_with_scheme
 
 
