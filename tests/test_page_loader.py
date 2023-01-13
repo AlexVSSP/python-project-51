@@ -7,7 +7,7 @@ from page_loader import download
 from page_loader.naming import make_dir_name, make_file_name_html
 from page_loader.download_resources import download_resources
 from page_loader.parse_resources import parse_resources
-from page_loader.making_paths import make_file_path, make_dir_path
+from page_loader.file_and_dir_paths import make_file_path, make_dir_path
 
 
 @pytest.fixture

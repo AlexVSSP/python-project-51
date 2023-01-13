@@ -5,7 +5,7 @@ import logging
 from page_loader.parse_resources import parse_resources
 from page_loader.download_resources import download_resources
 from page_loader.save_html_page import save_html_page
-from page_loader.making_paths import make_file_path, make_dir_path
+from page_loader.file_and_dir_paths import make_file_path, make_dir_path
 from page_loader.raise_errors import raise_connection_error, \
     raise_not_a_directory_error, raise_file_system_error
 
